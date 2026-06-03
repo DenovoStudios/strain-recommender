@@ -1,6 +1,6 @@
 import {onRequest} from "firebase-functions/v2/https";
 import * as logger from "firebase-functions/logger";
-import {callVertexRecommender} from "./vertexRecommender";
+import {getB4aRecommendations} from "./b4aRecommender";
 import {enrichWithBack4AppData} from "./strainEnricher";
 import {groupRecommendationsByAttribute}
   from "./groupRecommendationsByAttribute";
@@ -43,10 +43,7 @@ export const strainRecommender = onRequest(async (req, res) => {
     logger.info(`Calling Vertex AI for user_id: ${userId}, top_k: ${topK}`);
 
     // Vertex predictions
-    const vertexResponse = await callVertexRecommender(userId,
-      topK,
-
-      minConfidence);
+    const vertexResponse = await getB4aRecommendations(userId, topK, minConfidence);
 
     // Back4App enrichment
     const enrichedStrains = await enrichWithBack4AppData(vertexResponse);
