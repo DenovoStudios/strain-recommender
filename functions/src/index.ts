@@ -40,8 +40,6 @@ export const strainRecommender = onRequest(async (req, res) => {
       return;
     }
 
-    logger.info(`Calling Vertex AI for user_id: ${userId}, top_k: ${topK}`);
-
     // Vertex predictions
     const vertexResponse = await getB4aRecommendations(userId, topK, minConfidence);
 
